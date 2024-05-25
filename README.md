@@ -1,4 +1,10 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+## Table of Contents
+
+- [Getting Started](#gettingstarted)
+- [Objective](#objective)
+- [Specifications](#specification)
+- [Controls](#controls)
+- [Scoring](#scoring)
 
 ## Getting Started
 
@@ -16,21 +22,34 @@ bun dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+## Objective
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+o Implement a solution that meets the requirements below
+o Frontend must be written using Vue.js, React, or Angular.
+o A backend, if required, can be written in the tooling of your choice
+o Provide a readme /getting started documentation
+o Time-limit yourself to 4-8hours
 
-## Learn More
+## Specifications
 
-To learn more about Next.js, take a look at the following resources:
+The application is a simple game consisting of:
+o A square tabletop, 5 units x 5 units
+o A toy robot
+o A target square
+o A 60 second game timer
+o A leaderboard
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+The objective of the game is for the robot to reach as many target squares as possible within the 60 second time limit.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+## Controls
 
-## Deploy on Vercel
+o Left: Rotate 90 degrees to the left without changing position
+o Right: Rotate 90 degrees to the right without changing position
+o Move: Move the robot one unit forward in the direction it is currently facing
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+If the robot is driven over the edge of the table, the robot is destroyed, and the game is over.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+## Scoring
+
+The game score should be increased by 1 when the robot reaches the target square.
+A new target square should be spawned.
