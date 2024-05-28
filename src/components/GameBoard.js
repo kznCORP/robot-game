@@ -4,7 +4,7 @@ import React, { useState, useEffect } from "react";
 
 /**
  * Bugs are:
- * - If the Grid is an even number, Toy Robot is not in the middle.
+ * - If the Grid is an even number, Toy Robot is not in the middle. [possible fix, grid has to be an odd number]
  *
  *
  * Most difficult Bug squished:
@@ -19,8 +19,6 @@ const GameBoard = ({ rows, columns }) => {
     row: Math.floor(rows / 2),
     column: Math.floor(columns / 2),
   });
-  const [toyRobotDirection, setToyRobotDirection] = useState("NORTH");
-  const [rotationClass, setRotationClass] = useState(0);
 
   // Target Square
   const [targetSquarePosition, setTargetSquarePosition] = useState({
@@ -28,9 +26,14 @@ const GameBoard = ({ rows, columns }) => {
     column: 0,
   });
 
+  const [toyRobotDirection, setToyRobotDirection] = useState("NORTH");
+  const [rotationClass, setRotationClass] = useState(0);
+  const [score, setScore] = useState(0);
+  const [timeLeft, setTimeLeft] = useState(60);
+  const [gameOver, setGameOver] = useState(false);
+
   // Create a dynamic grid, excluding 2 for Toy Robot and Target Square
   const gameBoard = [];
-
   for (let i = 0; i < rows * columns - 2; i++) {
     gameBoard.push(
       <div
@@ -42,20 +45,27 @@ const GameBoard = ({ rows, columns }) => {
     );
   }
 
-  // Function to move the toy robot
   const moveToyRobot = () => {
     setToyRobotPosition((prevPosition) => {
       let { row, column } = prevPosition;
-      // Edge condition, refactor here if toy robot moves out of bounds, end game.
-      if (toyRobotDirection === "NORTH" && row > 0) row--;
-      else if (toyRobotDirection === "EAST" && column < columns - 1) column++;
-      else if (toyRobotDirection === "SOUTH" && row < rows - 1) row++;
-      else if (toyRobotDirection === "WEST" && column > 0) column--;
+
+      if (toyRobotDirection === "NORTH") row--;
+      else if (toyRobotDirection === "EAST") column++;
+      else if (toyRobotDirection === "SOUTH") row++;
+      else if (toyRobotDirection === "WEST") column--;
+
+      // Edge condition, out of bounds.
+      if (row < 0 || row >= rows || column < 0 || column >= columns) {
+        setGameOver(true);
+        setToyRobotDirection("NORTH");
+        setRotationClass("rotate-0");
+        return { row: Math.floor(rows / 2), column: Math.floor(columns / 2) };
+      }
+
       return { row, column };
     });
   };
 
-  // Rotate the Toy Robot to the left
   const rotateLeft = () => {
     setToyRobotDirection((prevDirection) => {
       let newDirection;
@@ -85,7 +95,6 @@ const GameBoard = ({ rows, columns }) => {
     });
   };
 
-  // Rotate the Toy Robot to the right
   const rotateRight = () => {
     setToyRobotDirection((prevDirection) => {
       let newDirection;
@@ -116,27 +125,48 @@ const GameBoard = ({ rows, columns }) => {
   };
 
   useEffect(() => {
-    // Generate a random position for the target square
-    const generateRandomPosition = () => {
-      const randomRow = Math.floor(Math.random() * rows);
-      const randomColumn = Math.floor(Math.random() * columns);
-      return { row: randomRow, column: randomColumn };
-    };
+    if (timeLeft > 0 && !gameOver) {
+      const timer = setTimeout(() => {
+        setTimeLeft((prevTime) => prevTime - 1);
+      }, 1000);
 
-    // Only generate a new position for the target square if it's the first render
-    if (targetSquarePosition.row === 0 && targetSquarePosition.column === 0) {
-      setTargetSquarePosition(generateRandomPosition());
-    } else {
-      // Check if the toy robot has reached the target square
-      if (
-        toyRobotPosition.row === targetSquarePosition.row &&
-        toyRobotPosition.column === targetSquarePosition.column
-      ) {
-        // If the toy robot has reached the target square, generate a new random position for the target square
+      // Generate a random position for the target square
+      const generateRandomPosition = () => {
+        const randomRow = Math.floor(Math.random() * rows);
+        const randomColumn = Math.floor(Math.random() * columns);
+        return { row: randomRow, column: randomColumn };
+      };
+
+      // Only generate a new position for the target square if it's the first render
+      if (targetSquarePosition.row === 0 && targetSquarePosition.column === 0) {
         setTargetSquarePosition(generateRandomPosition());
+      } else {
+        // Check if the toy robot has reached the target square
+        if (
+          toyRobotPosition.row === targetSquarePosition.row &&
+          toyRobotPosition.column === targetSquarePosition.column
+        ) {
+          // If the toy robot has reached the target square, +1 score and generate a new random position for the target square
+          setScore((prevScore) => prevScore + 1);
+          setTargetSquarePosition(generateRandomPosition());
+        }
       }
+
+      return () => clearTimeout(timer);
+    } else if (gameOver) {
+      setTimeLeft(60);
+      setScore(0);
+    } else if (timeLeft === 0) {
+      setGameOver(true); // End game when time runs out
     }
-  }, [toyRobotPosition, rows, columns, targetSquarePosition]);
+  }, [
+    toyRobotPosition,
+    rows,
+    columns,
+    targetSquarePosition,
+    timeLeft,
+    gameOver,
+  ]);
 
   return (
     <div>
@@ -174,6 +204,9 @@ const GameBoard = ({ rows, columns }) => {
           ⚙️
         </div>
       </div>
+
+      <div>Score: {score}</div>
+      <div>Time Left: {timeLeft} seconds</div>
 
       <div className="controls">
         <button onClick={rotateLeft}>Left</button>
