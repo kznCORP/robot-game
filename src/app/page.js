@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from "react";
 
 import GameBoard from "@/components/GameBoard";
+import Leaderboard from "@/components/Leaderboard";
 
 export default function Home() {
   return (
@@ -10,6 +11,7 @@ export default function Home() {
       <div className="flex flex-col items-center justify-center w-full flex-1 px-20 text-center">
         <h1 className="text-6xl font-bold mb-8">GameBoard</h1>
         <GameBoard rows={5} columns={5} />
+        <Leaderboard />
       </div>
     </main>
   );
