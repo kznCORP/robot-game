@@ -172,6 +172,10 @@ const GameBoard = ({ rows, columns }) => {
 
       // Store updated leaderboard in sessionStorage
       sessionStorage.setItem("leaderboard", JSON.stringify(leaderboard));
+
+      // Dispatch custom event to notify about the update
+      const event = new Event("leaderboardUpdate");
+      window.dispatchEvent(event);
     }
   }, [
     toyRobotPosition,
