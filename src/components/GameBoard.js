@@ -7,8 +7,10 @@
  */
 
 import React, { useState, useEffect } from "react";
+import ToyRobot from "./ToyRobot";
+import TargetSquare from "./TargetSquare";
 
-const GameBoard = ({ rows, columns }) => {
+const Board = ({ rows, columns }) => {
   const [user, setUser] = useState(0);
   const [score, setScore] = useState(0);
   const [timeLeft, setTimeLeft] = useState(60);
@@ -18,6 +20,7 @@ const GameBoard = ({ rows, columns }) => {
     row: Math.floor(rows / 2),
     column: Math.floor(columns / 2),
   });
+
   const [targetSquarePosition, setTargetSquarePosition] = useState({
     row: 0,
     column: 0,
@@ -199,25 +202,8 @@ const GameBoard = ({ rows, columns }) => {
       >
         {gameBoard}
 
-        <div
-          className={`bg-gray-700 w-full h-full flex items-center justify-center text-xl ${rotationClass}`}
-          style={{
-            gridRowStart: toyRobotPosition.row + 1,
-            gridColumnStart: toyRobotPosition.column + 1,
-          }}
-        >
-          🤖⬆️
-        </div>
-
-        <div
-          className="bg-yellow-300 w-full h-full flex items-center justify-center text-2xl"
-          style={{
-            gridRowStart: targetSquarePosition.row + 1,
-            gridColumnStart: targetSquarePosition.column + 1,
-          }}
-        >
-          ⚙️
-        </div>
+        <ToyRobot position={toyRobotPosition} rotationClass={rotationClass} />
+        <TargetSquare position={targetSquarePosition} />
       </div>
 
       <div className="flex justify-between">
@@ -238,4 +224,4 @@ const GameBoard = ({ rows, columns }) => {
   );
 };
 
-export default GameBoard;
+export default Board;
