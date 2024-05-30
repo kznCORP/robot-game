@@ -84,11 +84,26 @@ const Controls = ({
   };
 
   return (
-    <div className="controls">
-      <button onClick={rotateLeft}>Left</button>
-      <button onClick={moveToyRobot}>Move</button>
-      <button onClick={rotateRight}>Right</button>
-    </div>
+    <section className="mt-6 flex justify-between gap-6">
+      <button
+        onClick={rotateLeft}
+        className="bg-blue-400 w-full h-full uppercase text-xs whitespace-nowrap text-white py-4 rounded-md hover:bg-gray-500 hover:text-white"
+      >
+        Turn Left
+      </button>
+      <button
+        onClick={moveToyRobot}
+        className="bg-blue-400 w-full h-full uppercase text-xs whitespace-nowrap text-white py-4 rounded-md hover:bg-gray-500 hover:text-white"
+      >
+        Move +1
+      </button>
+      <button
+        onClick={rotateRight}
+        className="bg-blue-400 w-full h-full uppercase text-xs whitespace-nowrap text-white py-4 rounded-md hover:bg-gray-500 hover:text-white"
+      >
+        Turn Right
+      </button>
+    </section>
   );
 };
 

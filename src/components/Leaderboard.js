@@ -48,8 +48,8 @@ const Leaderboard = ({ user, score, gameOver }) => {
   }, [user, score, gameOver]);
 
   return (
-    <div className="mt-10 w-full bg-gray-100">
-      <h1 className="font-bold text-lg p-4">Leaderboard</h1>
+    <section className="w-full mt-8 pb-12 text-center text-slate-500 uppercase text-xs">
+      <h2 className="font-bold mb-2">Leaderboard</h2>
       <table className="w-full table-auto border-collapse border border-gray-300">
         <thead>
           <tr>
@@ -68,7 +68,7 @@ const Leaderboard = ({ user, score, gameOver }) => {
           ))}
         </tbody>
       </table>
-    </div>
+    </section>
   );
 };
 

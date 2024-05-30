@@ -7,6 +7,7 @@ import Score from "./Score";
 import ToyRobot from "./ToyRobot";
 import TargetSquare from "./TargetSquare";
 import Timer from "./Timer";
+import Instructions from "./Instructions";
 
 /**
  * Bugs are:
@@ -14,8 +15,7 @@ import Timer from "./Timer";
  *
  *
  * Up Next:
- * - Refactor code into Modular parts
- * - Improve Design, mobile/desktop responsiveness.
+ * - Improve Design, desktop responsiveness.
  * - Send along with a proud moment in building something.
  *
  * Total time: 9 hours. Overflow.
@@ -93,17 +93,18 @@ const Game = ({ rows, columns }) => {
   ]);
 
   return (
-    <div>
+    <section>
+      <div className="flex justify-between mb-6">
+        <Score score={score} />
+        <Timer timeLeft={timeLeft} />
+      </div>
+
       <Board rows={rows} columns={columns}>
         <ToyRobot position={toyRobotPosition} rotationClass={rotationClass} />
         <TargetSquare position={targetSquarePosition} />
       </Board>
 
-      <div className="flex justify-between">
-        <Score score={score} />
-        <Timer timeLeft={timeLeft} />
-      </div>
-
+      {/* 
       {gameOver ? (
         <button onClick={startGame}>Play Again</button>
       ) : (
@@ -116,10 +117,22 @@ const Game = ({ rows, columns }) => {
           setGameOver={setGameOver}
           setRotationClass={setRotationClass}
         />
-      )}
+      )} */}
+
+      <Controls
+        rows={rows}
+        columns={columns}
+        toyRobotDirection={toyRobotDirection}
+        setToyRobotPosition={setToyRobotPosition}
+        setToyRobotDirection={setToyRobotDirection}
+        setGameOver={setGameOver}
+        setRotationClass={setRotationClass}
+      />
+
+      <Instructions />
 
       <Leaderboard user={user} score={score} gameOver={gameOver} />
-    </div>
+    </section>
   );
 };
 

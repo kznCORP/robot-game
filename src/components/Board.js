@@ -6,9 +6,9 @@ const Board = ({ rows, columns, children }) => {
     gameBoard.push(
       <div
         key={i}
-        className="bg-gray-100 border border-gray-300 h-full w-full flex items-center justify-center"
+        className="bg-gray-50 border border-gray-100 h-full w-full flex items-center justify-center"
       >
-        <p className="text-gray-300">{i + 1}</p>
+        <p className="text-gray-200">{i + 1}</p>
       </div>
     );
   }
