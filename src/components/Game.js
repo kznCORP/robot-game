@@ -93,7 +93,7 @@ const Game = ({ rows, columns }) => {
   ]);
 
   return (
-    <section>
+    <section className="md:max-w-lg">
       <div className="flex justify-between mb-6">
         <Score score={score} />
         <Timer timeLeft={timeLeft} />
@@ -104,9 +104,15 @@ const Game = ({ rows, columns }) => {
         <TargetSquare position={targetSquarePosition} />
       </Board>
 
-      {/* 
       {gameOver ? (
-        <button onClick={startGame}>Play Again</button>
+        <div className="w-full flex items-center justify-center">
+          <button
+            onClick={startGame}
+            className="mt-8 bg-blue-400 w-1/2 self-center h-full uppercase text-xs whitespace-nowrap text-white py-4 rounded-md hover:bg-gray-500 hover:text-white"
+          >
+            Play Again
+          </button>
+        </div>
       ) : (
         <Controls
           rows={rows}
@@ -117,17 +123,7 @@ const Game = ({ rows, columns }) => {
           setGameOver={setGameOver}
           setRotationClass={setRotationClass}
         />
-      )} */}
-
-      <Controls
-        rows={rows}
-        columns={columns}
-        toyRobotDirection={toyRobotDirection}
-        setToyRobotPosition={setToyRobotPosition}
-        setToyRobotDirection={setToyRobotDirection}
-        setGameOver={setGameOver}
-        setRotationClass={setRotationClass}
-      />
+      )}
 
       <Instructions />
 

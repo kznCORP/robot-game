@@ -2,7 +2,7 @@ import React from "react";
 
 const Timer = ({ timeLeft }) => {
   return (
-    <div>
+    <div className="text-end">
       <h2 className="uppercase text-xs whitespace-nowrap text-blue-400 ">
         Time Left
       </h2>
