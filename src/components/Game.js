@@ -9,18 +9,6 @@ import TargetSquare from "./TargetSquare";
 import Timer from "./Timer";
 import Instructions from "./Instructions";
 
-/**
- * Bugs are:
- * - If the Grid is an even number, Toy Robot is not in the middle. [possible fix, grid has to be an odd number]
- *
- *
- * Up Next:
- * - Improve Design, desktop responsiveness.
- * - Send along with a proud moment in building something.
- *
- * Total time: 9 hours. Overflow.
- */
-
 const Game = ({ rows, columns }) => {
   const [user, setUser] = useState(1);
   const [score, setScore] = useState(0);
@@ -91,6 +79,12 @@ const Game = ({ rows, columns }) => {
     score,
     user,
   ]);
+
+  if ((rows * columns) % 2 === 0) {
+    throw new Error(
+      "Grid dimensions must be odd numbers to center the Toy Robot."
+    );
+  }
 
   return (
     <section className="md:max-w-lg">

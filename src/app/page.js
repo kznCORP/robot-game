@@ -2,6 +2,10 @@
 
 import React from "react";
 
+/*
+ * Total time: 10+ hours. Overflow.
+ */
+
 import Game from "@/components/Game";
 export default function Home() {
   return (
